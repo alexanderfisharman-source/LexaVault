@@ -9,3 +9,4 @@ crate-type = ["staticlib"] # Required for linking with Swift
 [dependencies]
 aes-gcm = "0.10"
 argon2 = "0.5" # Better than PBKDF2 for password hashing
+libc = "0.2.183"

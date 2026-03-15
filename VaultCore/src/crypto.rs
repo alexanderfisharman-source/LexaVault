@@ -14,7 +14,7 @@ pub fn derive_key(password: &str, salt: &str) -> [u8; 32] {
     let hash = argon2.hash_password(password.as_bytes(), &salt_obj)
         .expect("Failed to hash password");
     
-    let hash_bytes = hash.hash().expect("Failed to retrieve hash bytes").as_bytes();
+    let hash_bytes = hash.hash.expect("Failed to retrieve hash bytes").as_bytes();
     
     // Ensure we take exactly 32 bytes for AES-256
     output_key.copy_from_slice(&hash_bytes[..32]);

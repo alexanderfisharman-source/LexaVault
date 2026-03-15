@@ -1,3 +1,5 @@
+extern crate libc;
+use libc::{uint8_t, size_t};
 pub mod crypto;
 
 use aes_gcm::{
