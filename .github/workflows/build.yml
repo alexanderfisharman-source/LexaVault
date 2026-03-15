@@ -13,10 +13,14 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Setup Rust
+      - name: Setup Rust Cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: "VaultCore -> target"
+
+      - name: Setup Rust Targets
         run: |
           rustup target add aarch64-apple-ios
-          rustup target add aarch64-apple-ios-sim
 
       - name: Build Rust Core
         run: |
@@ -43,6 +47,7 @@ jobs:
       - name: Package IPA
         run: |
           mkdir -p Payload
+          # The path below is derived from your -derivedDataPath 'build'
           cp -r build/Build/Products/Release-iphoneos/VaultApp.app Payload/
           zip -r VaultApp.ipa Payload/
 

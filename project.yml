@@ -1,4 +1,4 @@
-name: LexaVault
+name: VaultApp  # <--- This must match the name in your xcodebuild command
 options:
   bundleIdPrefix: com.alexanderfisharman
 targets:
@@ -11,16 +11,11 @@ targets:
       - path: VaultApp/Resources
     settings:
       base:
-        # Standard App Identity
-        PRODUCT_BUNDLE_IDENTIFIER: com.alexanderfisharman.LexaVault
+        PRODUCT_BUNDLE_IDENTIFIER: com.alexanderfisharman.VaultApp
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         INFOPLIST_FILE: VaultApp/Resources/Info.plist
-        
-        # Bridging & Entry Point
         SWIFT_OBJC_BRIDGING_HEADER: VaultApp/Sources/VaultBridge.h
         TARGETED_DEVICE_FAMILY: "1"
-        
-        # Rust Integration (The Linker Logic)
         LIBRARY_SEARCH_PATHS: 
           - $(inherited) 
           - "$(PROJECT_DIR)/VaultApp/Libs"
@@ -28,8 +23,6 @@ targets:
           - $(inherited) 
           - "-lvault_core"
           - "-Wl,-no_warn_duplicate_libraries"
-        
-        # Build Performance & Compatibility
         ENABLE_BITCODE: NO
         CODE_SIGNING_ALLOWED: NO
         SWIFT_VERSION: "5.0"
