@@ -7,13 +7,4 @@ struct VaultApp: App {
             ContentView()
         }
     }
-}import SwiftUI
-
-@main
-struct VaultApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
-    }
 }
