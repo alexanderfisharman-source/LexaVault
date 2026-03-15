@@ -1,23 +1,35 @@
-name: VaultApp
+name: LexaVault
 options:
-  bundleIdPrefix: com.yourname
+  bundleIdPrefix: com.alexanderfisharman
 targets:
   VaultApp:
     type: application
     platform: iOS
     deploymentTarget: "17.0"
-    sources: 
-      - VaultApp/Sources
-      - VaultApp/Resources
-    info:
-      path: VaultApp/Info.plist
+    sources:
+      - path: VaultApp/Sources
+      - path: VaultApp/Resources
     settings:
-      SWIFT_OBJC_BRIDGING_HEADER: VaultApp/Sources/VaultBridge.h
-      # Force the linker to look exactly in the Libs folder we created
-      LIBRARY_SEARCH_PATHS: 
-        - $(inherited) 
-        - "$(PROJECT_DIR)/VaultApp/Libs"
-      OTHER_LDFLAGS: 
-        - $(inherited) 
-        - "-lvault_core"
-      ENABLE_BITCODE: NO
+      base:
+        # Standard App Identity
+        PRODUCT_BUNDLE_IDENTIFIER: com.alexanderfisharman.LexaVault
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        INFOPLIST_FILE: VaultApp/Resources/Info.plist
+        
+        # Bridging & Entry Point
+        SWIFT_OBJC_BRIDGING_HEADER: VaultApp/Sources/VaultBridge.h
+        TARGETED_DEVICE_FAMILY: "1"
+        
+        # Rust Integration (The Linker Logic)
+        LIBRARY_SEARCH_PATHS: 
+          - $(inherited) 
+          - "$(PROJECT_DIR)/VaultApp/Libs"
+        OTHER_LDFLAGS: 
+          - $(inherited) 
+          - "-lvault_core"
+          - "-Wl,-no_warn_duplicate_libraries"
+        
+        # Build Performance & Compatibility
+        ENABLE_BITCODE: NO
+        CODE_SIGNING_ALLOWED: NO
+        SWIFT_VERSION: "5.0"
