@@ -1,0 +1,11 @@
+[package]
+name = "vault_core"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["staticlib"] # Required for linking with Swift
+
+[dependencies]
+aes-gcm = "0.10"
+argon2 = "0.5" # Better than PBKDF2 for password hashing
