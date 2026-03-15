@@ -3,14 +3,15 @@ name: Build Surgical Vault IPA
 on:
   push:
     branches: [ main ]
-  workflow_dispatch: # Allows manual trigger
+  workflow_dispatch:
 
 jobs:
   build:
-    runs-on: macos-latest # GitHub provides Mac runners with Xcode tools pre-installed
+    runs-on: macos-latest
     
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
       - name: Setup Rust
         run: |
@@ -31,11 +32,16 @@ jobs:
           mkdir -p ../VaultApp/Libs
           cp target/aarch64-apple-ios/release/libvault_core.a ../VaultApp/Libs/
 
+      - name: Generate Xcode Project
+        run: |
+          brew install xcodegen
+          xcodegen generate
+
       - name: Build iOS App
         run: |
           xcodebuild -project VaultApp.xcodeproj \
             -scheme VaultApp \
-            -sdk iphoneos \
+            -sdk "$SDKROOT" \
             -configuration Release \
             -derivedDataPath build \
             CODE_SIGNING_ALLOWED=NO \
@@ -44,6 +50,7 @@ jobs:
       - name: Package IPA
         run: |
           mkdir -p Payload
+          # Ensure the path matches where xcodebuild drops the unsigned .app
           cp -r build/Build/Products/Release-iphoneos/VaultApp.app Payload/
           zip -r VaultApp.ipa Payload/
 
