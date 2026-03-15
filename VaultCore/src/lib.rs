@@ -7,7 +7,6 @@ use aes_gcm::{
     Aes256Gcm, Nonce,
 };
 use std::slice;
-use libc::{uint8_t, size_t};
 
 // --- FFI EXPORTS ---
 
