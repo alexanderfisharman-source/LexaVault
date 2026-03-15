@@ -13,6 +13,11 @@ targets:
       path: VaultApp/Info.plist
     settings:
       SWIFT_OBJC_BRIDGING_HEADER: VaultApp/Sources/VaultBridge.h
-      OTHER_LDFLAGS: -L${SRCROOT}/VaultApp/Libs -lvault_core
-      LIBRARY_SEARCH_PATHS: $(inherited) ${SRCROOT}/VaultApp/Libs
+      # Force the linker to look exactly in the Libs folder we created
+      LIBRARY_SEARCH_PATHS: 
+        - $(inherited) 
+        - "$(PROJECT_DIR)/VaultApp/Libs"
+      OTHER_LDFLAGS: 
+        - $(inherited) 
+        - "-lvault_core"
       ENABLE_BITCODE: NO
